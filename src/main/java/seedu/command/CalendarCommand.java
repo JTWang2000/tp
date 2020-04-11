@@ -32,7 +32,7 @@ public class CalendarCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws ProjException {
+    public CommandResult execute() {
 
         // parsing user input, if not valid int, set as default month
         if ((userInput != null) && (Parser.isInteger(userInput))) {

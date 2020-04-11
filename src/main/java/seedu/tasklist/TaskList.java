@@ -79,7 +79,7 @@ public class TaskList {
      */
     public void changeCategory(int taskIndex, String newCategory) {
         String oldCategory = taskList.get(taskIndex).getCategory();
-        this.categoryMap.get(oldCategory).remove(taskIndex);
+        this.categoryMap.get(oldCategory).remove(Integer.valueOf(taskIndex));
         if (this.categoryMap.get(oldCategory).size() == 0) {
             this.categoryMap.remove(oldCategory);
         }

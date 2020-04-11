@@ -16,7 +16,6 @@ public class CalendarParser {
     private static final String DATE_FORMAT = "yyyy/MM/dd";
     private static final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Calendar calendar = Calendar.getInstance();
 
     /**
@@ -80,8 +79,6 @@ public class CalendarParser {
     public int getYear() {
         return calendar.get(Calendar.YEAR);
     }
-
-
 
     public static LocalDate convertToDate(String userInput) throws DateTimeParseException {
         LocalDate localDate = LocalDate.parse(userInput, dateFormatter);

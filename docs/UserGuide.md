@@ -58,7 +58,6 @@ The `< >` symbol just for readability.
     * `24:00` will be parsed to `23:59` since 24:00 is next day. 
     * `2021-02-30` will be parsed to `2021-02-28`
 
-
 ---
 ### 3.1. Viewing help: `help`
 Displays the set of supported commands <br/>
@@ -68,22 +67,23 @@ Displays the set of supported commands <br/>
 Users add tasks using this command. <br/>
 **Usage**: `add  n/<NAME> t/<TIME> l/<LOCATION> d/<DATE> i/<INFORMATION> r/<REMINDER> c/<CATEGORY>` <br/>
   * Only name `<NAME>` is compulsory to include. However, if user only inputs time, 
-  then date of current day will be added automatically. 
+    then date of current day will be added automatically. 
   * Space is okay in `<NAME>`,`<REMINDER>` and `<INFORMATION>`.  e.g.: `n/2113 deadline` is accepted.                                                       
   * The `<TIME>` should be in time duration format: `hh:mm-hh:mm` (e.g. `14:00-16:00`).
-   There should be no space between this duration. 
+      There should be no space between this duration. 
   * Since a task/class may have multiple time zones in a week, students can just add list of time zones.
-   However, the number of `<TIME>`should match with the number of `<DATE>`. It is suggested that 
-   the number of `<LOCATION>` also match with the number of `<TIME>`. Use space to separate the time 
-   zone/date/location. 
+      However, the number of `<TIME>`should match with the number of `<DATE>`. It is suggested that 
+      the number of `<LOCATION>` also match with the number of `<TIME>`. Use space to separate the time 
+      zone/date/location. 
      * Example
        * `add n/CS2113 t/12:00-13:00 15:00-16:00 d/2020-07-01 2020-09-01 l/NUS NTU`  
        Adds a task with two time zones, dates, and locations.
   * If no `<DATE>` is inputted by `<TIME>` is inputted, the system will automatically add today's date
-   to that task. 
+      to that task. 
   * The default category is TODO. To add a class, just indicate the category is `CLASS`. The category is
-   case-insensitive.  
-   
+      case-insensitive.  
+  * Task's notification are `[N]` (not completed, after just add) and `[Y]` (completed, after done) Class's notification is always `[W]` (weekly).
+
 #### 3.2.1 Adding Task:
 * `<Date>` should be in format:`yyyy-mm-dd`
 
@@ -113,23 +113,24 @@ Edit the inputted task/class. <br/>
 * When edit `<TIME>` and `<DATE>`, please be reminded that the number of `<TIME>` should match with the 
   number of `<DATE>`. It is suggested that number of location `<LOCATION>` also matches. 
     * If you only have added one of the `<TIME>` and `<DATE>` for that task, no need to follow the 
-    _number matching of TIME and DATE_ since there is only field in that task. 
+      _number matching of TIME and DATE_ since there is only field in that task. 
     * If you have added both `<TIME>` and `<DATE>` for a task _1_:<br/>
-    For example:  Previously the task _1_ is:`[TODO] Title: Project Meeting | 2020-09-10 : 11:00 - 12:00`<br/>
-    When editing, can either input `<TIME>` with same number of `<DATE>` in current task _1_ : 
+      For example:  Previously the task _1_ is:`[TODO] Title: Project Meeting | 2020-09-10 : 11:00 - 12:00`<br/>
+      When editing, can either input `<TIME>` with same number of `<DATE>` in current task _1_ : 
                 <br/>e.g. `edit 1 t/01:00-02:00`<br/>
                 or input `<DATE>` with same number of `<TIME>` in current task _1_ : 
                 <br/>e.g. `edit 1 d/2020-11-12`<br/>
                 or input both `<TIME>` and `<DATE>` with same number : 
                 <br/>e.g. `edit 1 d/2020-09-10 2020-09-11 t/11:00-12:00 13:00-14:00`
   
+
 Examples: <br/>
 * `edit 2 l/NUSCOM2`<br/>
 Edit the location of task 2 to be NUSCOM2
 * `edit 2 c/todo`  <br/>
 Edit the category of task 2 to be TODO
 
-        
+  ​      
 ### 3.4. Listing tasks: `list`
 #### 3.4.1. List
 Displays all the current tasks in the list. <br/> 
@@ -168,15 +169,16 @@ Examples: <br/>
 Lists the `tasks` that fall on the date `2020-07-01` 
 * `list d/2020-07-01 d/2020-09-01` <br/>
 Lists the `tasks` that fall on either `2020-07-01` or `2020-09-01`
-    
+  
 #### 3.4.5. List by Date & Time        
 Lists tasks by specific date and time. <br/>
 **Usage** : `list d/<DATE> t/<TIME>`
-  
+
 * `task` with a specific date and time range can be listed by `list d/yyyy-mm-dd t/hh:mm-hh:mm`
 * `class` cannot be listed by date and time since class only adopts schedule.   
 * List the `tasks` which are exactly at that time range or have a overlap at that time range.
   
+
 Example:
 * `list d/2020-07-01 t/12:00-13:00` <br/>
 Lists the `tasks` that fall on the given date (`2020-07-01`) and within the given time frame (`12:00-13:00`)
@@ -194,7 +196,7 @@ Examples: <br/>
 Lists the `tasks` whose start time before `2020-07-01 13:00` and end time after `2020-07-01 12:00` and  category is `meeting`
 * `list d/2020-05-16 c/deadline` <br/>
 Lists the `tasks` which have date on `2020-05-16` and whose `category` is `deadline`
-* `list t/23:00-23:30 c/deadline`
+* `list t/23:00-23:30 c/deadline`<br/>
 Lists the `tasks` whose start time before `23:00` and end time after `23:30`and `category` is `deadline`
 
 ### 3.5. Deleting tasks: `delete`
@@ -215,6 +217,7 @@ Delete tasks and classes by specific time range. <br/>
 * `task` and `class` with a specific time range can be deleted by `delete t/hh:mm-hh:mm`.
 * Delete the `tasks` and `classes`  which are exactly at that time range or have a overlap at that time range. 
   
+
 Example: 
 * `delete t/15:00-16:00` <br/>
 Deletes the `tasks` that fall within the given time frame `15:00-16:00`
@@ -227,10 +230,10 @@ Delete tasks by specific date. <br/>
 
 Examples:
    * `delete d/2020-07-01` <br/>
-   Deletes the `tasks` that fall on `2020-07-01`
+      Deletes the `tasks` that fall on `2020-07-01`
    * `delete d/2020-07-01 d/2020-09-01` <br/>
-   Deletes the `tasks` that fall on either `2020-07-01` or `2020-09-01`
-   
+      Deletes the `tasks` that fall on either `2020-07-01` or `2020-09-01`
+
 #### 3.5.4 - Delete by Date & Time        
 Delete tasks by specific date and time. <br/>
 **Usage** : `delete d/<DATE> t/<TIME>`
@@ -238,20 +241,22 @@ Delete tasks by specific date and time. <br/>
 *  `class` cannot be listed by date and time since class only adopts schedule. 
 * Delete the `tasks` which are exactly at that time range or have a overlap at that time range.
   
+
  Example: <br>
    * `delete d/2020-07-01 t/12:00-13:00` <br/>
-   Deletes the `tasks` that fall on the given date and within the given time frame.
-    
+      Deletes the `tasks` that fall on the given date and within the given time frame.
+
 ### 3.6. Marking tasks as done: `done`
-Marks a task as complete, changing the notification from 'N' (not completed) to 'Y' (completed). <br>
+Marks a task as complete, changing the notification from '`N`' (not completed) to '`Y`' (completed). <br>
 **Usage**: `done <TASK_INDEX>` 
-* Obtain task index from `list` command (without any filters)
-* task cannot be a from the category class
-* Index is a valid positive number
+
+* Obtain task index from `list` command. (without any filters)
+* task cannot be a from the category class. Class's notification is always '`W`' (Weekly).
+* Index is a valid positive number.
 
 Example:
 * `done 4` <br/>
-Marks the fourth task as completed
+Marks the fourth task as completed. 
 
 ### 3.7. Finding tasks: `find`
 Searches all task titles, descriptions, and locations for supplied pattern <br/>
@@ -282,7 +287,7 @@ Clears the output window. <br/>
 ### 3.10. Exiting program: `bye`
 Exits the program. <br/>
 **Usage**: `bye`
-  
+
 <br/>  
 
 ---

@@ -1,11 +1,13 @@
 package seedu.calendar;
 
-import seedu.command.CalendarCommand;
 import seedu.tasklist.TaskList;
-
 import java.time.LocalDate;
 import java.util.Collections;
 
+/**
+ * Generates a formatted view of a monthy calendar with notifications if a particular day has a task.
+ *
+ */
 public class GenerateCalendar {
     public static final String VERTICAL_MARK = "|";
     public static final String JOIN_MARK = "+";
@@ -27,8 +29,6 @@ public class GenerateCalendar {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String NO_ENTRY = String.format("%s%-" + DEFAULT_WIDTH + "s", VERTICAL_MARK, PADDING);
     public static final int CALENDAR_OFFSET = 1;
-
-    //private List<String[]> rows = new ArrayList<>();
 
     private int startingDay;
     private int totalDays;
@@ -138,7 +138,6 @@ public class GenerateCalendar {
             }
             dateCounter++;
         }
-
         currentWeek += VERTICAL_MARK;
         currentWeek += NEW_LINE;
         currentWeek = getDailyTasks(currentWeek);
@@ -162,12 +161,10 @@ public class GenerateCalendar {
     private String printHeader() {
         String currentLine = "";
         for (String day : HEADING) {
-            int padding = DEFAULT_WIDTH + SYMBOL_SIZE - day.length();
             currentLine += String.format("%s%-" + DEFAULT_WIDTH + "s", VERTICAL_MARK, day);
         }
         currentLine += VERTICAL_MARK;
         currentLine += NEW_LINE;
         return currentLine;
     }
-
 }

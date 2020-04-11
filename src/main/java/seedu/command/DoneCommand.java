@@ -10,6 +10,10 @@ import static seedu.common.Constants.TAB;
 import static seedu.common.Constants.NEW_LINE;
 import static seedu.common.Constants.TASKLIST_OFFSET;
 
+/**
+ * Allows users to mark a task as complete and displays back to them the change.
+ *
+ */
 public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";
@@ -83,6 +87,4 @@ public class DoneCommand extends Command {
         feedback += "[" + ((TaskNonclass) task).getStatusIcon() + "] " + task + "\n";
         Storage.overwriteFile(taskList.getList());
     }
-
-
 }

@@ -25,8 +25,6 @@
 
 * [5. About me](#about-me)
 
-  
-
 <a name="introduction"></a>
 
 ### CAFS Introduction 
@@ -47,7 +45,7 @@ You can view my code contribution for this project: [RepoSense Dashboard](https:
 
 #### Enhancements implemented
 
-- Major Enhancement: added the 
+- Major Enhancement: added the ability to scedule the task based on the user's requirement
 
 
 
@@ -62,6 +60,7 @@ You can view my code contribution for this project: [RepoSense Dashboard](https:
 #### Contributions to the DG
 
 - Documented a few user stories.
+- Draw the UML of List and Delete.
 
 <a name ="#contribute-team"></a>
 
@@ -75,7 +74,7 @@ You can view my code contribution for this project: [RepoSense Dashboard](https:
 
 #### Review/Mentoring contributions: 
 
-- Reviewed the following PR's: [#130](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/130), [#104](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/104), 
+- Reviewed the following PR's: [#130](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/130), [#104](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/104), [#162](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/162), [#175](https://github.com/AY1920S2-CS2113-T14-3/tp/pull/175).
 
 <a name="contribute-team"></a>
 
@@ -154,6 +153,8 @@ List tasks by category and date and time.
 <a name="contribute-dg"></a>
 
 ### Contributions to the Developer Guide
+
+
 
 <a name="about-me"></a>
 

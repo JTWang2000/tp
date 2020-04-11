@@ -5,7 +5,6 @@ import seedu.storage.Storage;
 import seedu.tasks.Task;
 import seedu.tasks.TaskNonclass;
 import seedu.tasks.Class;
-
 import static seedu.common.Constants.CLASS_CATEGORY;
 import static seedu.common.Constants.TAB;
 

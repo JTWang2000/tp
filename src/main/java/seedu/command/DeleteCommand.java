@@ -390,7 +390,6 @@ public class DeleteCommand extends Command {
         }
 
         if (len == 2 && (date.isEmpty() && time.isEmpty() && category.isEmpty())) {
-            System.out.println(len);
             return DELETE_TASK;
         }
 

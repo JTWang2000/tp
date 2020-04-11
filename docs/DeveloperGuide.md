@@ -8,9 +8,10 @@
     * [UI](#22-ui)
     * [Task Component](#23-task-component)
     * [Storage Component](#24-storage-component)
+    * [calendar Component](#25-calendar-component)
 * [Implementation](#3-implementation)
     * [List By Category](#31-list-by-category)
-    * [Calendar](#32-proposed-view-month)
+    * [Calendar](#32-calendar-command)
     * [Add](#33-proposed-add-task--class)
     * [Storage](#34-storage)
 * [Documentation](#4-documentation)
@@ -100,7 +101,7 @@ Here is a simplified class diagram to illustrate this interaction:
 
 Ideally, all messages or output meant to be displayed should use the UI class instead of calling a system print or any other method.
 
-At the moment, the only outliers are certain exception error handling messages which will be standardised to follow this principle in a later version.
+* At the moment, the only outliers are certain exception error handling messages which will be standardised to follow this principle in a later version.
 
 ### 2.3. Task Component
 
@@ -123,7 +124,8 @@ In total, Task component comprises of 4 classes:
 1. TaskList - Methods called by commands to operate on task list. Also contains the actual list which stores all tasks.
 1. Task - Abstract class to model a generic task
 1. Class - Specialised class to model a student's timetable
-1. Task - Specialised class to model an actionable task / todo
+1. TaskNonClass - Specialised class to model an actionable task / todo
+
 
 ### 2.4. Storage Component 
 
@@ -136,10 +138,24 @@ Below is a class diagram showing the interactions of this component with other c
 
 ![Storage_Class_Diagram](images/Storage_Class_Diagram.png)
 
+### 2.5. Calendar Component
+
+![Command Result UI](images/CalendarDiagram.jpg)
+
+The Calendar component consists of 2 classes:
+1. CalendarParser - returns back all the necessary information about the requested month (eg. starting day, how many days/weeks in month)
+1. GenerateCalendar - formats the requested month and daily data into a monthy calendar
+
+The Calendar component depends on one other component:
+
+1. Task - Calendar component queries the Task component to determine how many tasks there are for each day of the selected month
+
+For future development, any code that requires the parsing of LocalDate can use the CalendarParser class to retrieve information of that date.
 
 ## 3. Implementation
+
 #### 3.1 List By Category
-##### 3.1.1 Proposed Implementation
+##### 3.1.1 Implementations
 The list by category mechanism is facilitated by ListCommand which extends Command.
 
 Given below is an example usage scenario and how the mechanism behaves at each step.
@@ -172,50 +188,58 @@ stores the needed categories.
 Alternative 2 (current choice): linear search when searching tasks. 
 
 
-#### 3.2 [Proposed] View month
-##### 3.2.1 Proposed Implementation
-The view month mechanism is facilitated by CalendarCommand which extends Command.
+#### 3.2 Calendar Command
+##### 3.2.1 Implementation
+The monthy view mechanism is facilitated by CalendarCommand which extends Command.
 
 Given below is an example usage scenario and how the mechanism behaves at each step.
 
 1. The user inputs the command word `calendar`. Upon which, the instance of parser will return a CalendarCommand for execution
-1. CalendarCommand initialises with the following variables, with the help from a calendar class containing the necessary methods related to day/date.
-    * month - if user does not input month, it uses computer's current month
+    * There is an optional argument that the user can input to select which month to display
+    * All invalid months will be redirected to display current month
+        * This is a design choice, and can be changed to display an error if users find it misleading
+    
+1. CalendarCommand initialises with the following variables, with the help from CalendarParser class containing the necessary methods related to day/date.
+    * checkMonth - if user does not input month, it uses computer's current month
     * startingDay - which day of the week the first day of the months begins on (0-6, where 0 is Monday)
     * totalDays - how many days in that month
     * totalWeeks - number of weeks of the month
-  
-1. The `calendar` command calls on TaskList#findTaskDate() for each day of the month to generate the task listing for a particular day. Only the task event and description is added to calendar view. 
-1. The calendar generated is then stored in a string and UI#showUserMesssage() is called to display the calendar. 
+    * currentYear - the current year. The application currently does not support different years.
+    
+1. CalendarCommand creates a new class GenerateCalendar with the information initialised above to generate an output of the selected month. 
+1. The GenerateCalendar calls on TaskList#categoryCounter() for each day of the month to generate the task listing for a particular day.
+1. The calendar generated is then returned to CalendarCommand as a string and stored in CommandResult where it is displayed Main.
 
 The class diagram below shows the relationships between the different classes required by the `calendar` feature.
 ![Sequence diagram for CalendarCommand](images/CalendarCommand_class.jpg)
 
-
 The following diagram summarises what happens when a user executes a new `calendar` command:
 ![Sequence diagram for CalendarCommand](images/CalendarCommand_sequence.jpg)
+
+![Sequence diagram for CalendarCommand](images/sd_Parser.jpg)
+
+![Sequence diagram for CalendarCommand](images/sd_Month.jpg)
 
 
 ##### 3.2.2 Design Considerations
 1. Aspect: Obtaining information required for generating monthly view
   
-    * Alternative 1: (current choice) Algorithm to deduce how many weeks in month, which day a date is, how many days in that month
+    * Alternative 1: Algorithm to deduce how many weeks in month, which day a date is, how many days in that month
         * Pros: Will use less memory, requiring only one starting date we are able to derive any other dates. No need to worry about changing template for the new year
         * Cons: New developers will take additional effort to understand how the algorithm works.
       
     * Alternative 2: Hardcoded information (constant variables to tell days in month/how many weeks)
         * Pros: Easy maintenance, tedious but easily calculated with web applications.
         * Cons: Tedious and not sustainable, constant updates have to be done to edit the fields for a new year
-
+    
+    * Alternative 3 (current): Make use of Java inbuilt features to parse date by using Calendar and LocalDate.
+        * Pros: Easy maintenance, errors handled internally. A lot of methods to manipulate data.
+        * Cons: Might be hard to understand how to use at first
+     
 1. Aspect: Which month to use
   
     * User might want to know schedule for other months, but might also want a quick view of current month
     * Solution is to set a default month (taken from computer) and also allow input for preferred month.
-
-1. Aspect: generation of monthly details 
-  
-    * Calculation of details are shifted from the command to a separate class. 
-    This is to enable easier maintenance for methods relating to calendar features.
     
 #### 3.3 [Proposed] Add Task / Class
 ##### 3.3.1 Proposed Implementation
@@ -446,7 +470,7 @@ _Assumption: Valid index is provided. This test output is based on previous adde
 
 
 
-### 6.5.5 List Task
+#### 6.5.5 List Task
 * _Assumption: This test output is based on previous added task in the_ [Add Task/Class](#652-add-taskclass)
     * Test case 1:
         * `list`
@@ -490,6 +514,7 @@ _Assumption: Valid index is provided. This test output is based on previous adde
            The following task has been removed:                                                                                           
            [MEETING] Title: Project Meeting | 2020-07-01 : 12:00 - 13:00 ( NUS ) | 2020-09-01 : 15:00 - 16:00 ( NTU )<br/>
            Now you have <NUM> task/tasks in your calendar.
+                                  
 #### 6.5.7 Find
 * _Assumption: This test output is based on previous added task in the_ [Add Task/Class](#652-add-taskclass) 
     * Test case:
@@ -500,19 +525,18 @@ _Assumption: Valid index is provided. This test output is based on previous adde
         
 
 #### 6.5.8 Calendar
-*
-    * Test case:
-        * `calendar`
-        > Expected: current month calendar will be displayed.<br/>
-        The tasks on that month will also be displayed.
+* Test case:
+     * `calendar`
+     > Expected: current month calendar will be displayed.<br/>
+     The tasks on that month will also be displayed.
+
 #### 6.5.9 Clear
-*
-    * Test case:
-        * `clc`
-        > Expected: Clears the output window.
+* Test case:
+     * `clc`
+     > Expected: Clears the output window.
+        
 #### 6.5.10 Help
-*
-    * Test case:
-        * `help`
-        > Expected: The usage of command will be displayed. 
+* Test case:
+    * `help`
+    > Expected: The usage of command will be displayed. 
  
